@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -12,8 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $title  название
  * @property string|null $details    информация о продукте
  * @property string $description  описание
- * @property boolean|null $is_published  опубликован
- * @property integer $price цена
+ * @property bool|null $is_published  опубликован
+ * @property int $price цена
  *
  * @property ProductCategories $productCategories
  */
@@ -24,9 +25,12 @@ class Product extends Model
 
     protected $fillable = ['title', 'details', 'description', 'price'];
 
-    public function categories()
+    /**
+     * @return BelongsToMany
+     */
+    public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class,'product_categories');
+        return $this->belongsToMany(Category::class, 'product_categories');
     }
 
 }

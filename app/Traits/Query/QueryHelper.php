@@ -24,6 +24,7 @@ trait QueryHelper
             foreach ($options as $key => $query) {
                 $this->queryOptions[$key] = $query;
             }
+
             return $this->queryOptions;
         }
 

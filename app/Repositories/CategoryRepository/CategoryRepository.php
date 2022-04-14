@@ -2,7 +2,6 @@
 
 namespace App\Repositories\CategoryRepository;
 
-
 use App\Models\Category;
 use App\Repositories\AbstractRepository;
 

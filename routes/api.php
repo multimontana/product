@@ -19,30 +19,40 @@ use Illuminate\Support\Facades\Route;
 /**
  * Category
  */
-Route::prefix('/categories')->group(function () {
-    Route::get('/get', [CategoryController::class, 'getCategoriesAction']);
-});
+Route::prefix('/categories')->group(
+    function () {
+        Route::get('/get', [CategoryController::class, 'getCategoriesAction']);
+    }
+);
 
-Route::prefix('category')->group(function () {
-    Route::post('/create', [CategoryController::class, 'createAction']);
-    Route::put('/update/{id}', [CategoryController::class, 'updateAction']);
-    Route::delete('/delete/{id}', [CategoryController::class, 'deleteAction']);
-});
-
+Route::prefix('category')->group(
+    function () {
+        Route::post('/create', [CategoryController::class, 'createAction']);
+        Route::put('/update/{id}', [CategoryController::class, 'updateAction']);
+        Route::delete('/delete/{id}', [CategoryController::class, 'deleteAction']);
+    }
+);
 
 /**
  * Product
  */
-Route::prefix('/products')->group(function () {
-    Route::get('/get', [ProductController::class, 'getProductsAction']);
-});
+Route::prefix('/products')->group(
+    function () {
+        Route::get('/get', [ProductController::class, 'getProductsAction']);
+    }
+);
 
-Route::prefix('product')->group(function () {
-    Route::post('/create', [ProductController::class, 'createAction']);
-    Route::put('/update/{id}', [ProductController::class, 'updateAction']);
-    Route::delete('/delete/{id}', [ProductController::class, 'deleteAction']);
-});
+Route::prefix('product')->group(
+    function () {
+        Route::post('/create', [ProductController::class, 'createAction']);
+        Route::put('/update/{id}', [ProductController::class, 'updateAction']);
+        Route::delete('/delete/{id}', [ProductController::class, 'deleteAction']);
+    }
+);
 
-Route::any('{error}', function ($page) {
-   return response('404 Error');
-})->where('error', '(.*)');
+Route::any(
+    '{error}',
+    function ($page) {
+        return response('404 Error');
+    }
+)->where('error', '(.*)');

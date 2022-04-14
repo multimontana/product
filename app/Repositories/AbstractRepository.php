@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Entity\CategoryPackages\Category;
-use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as DBBuilder;
@@ -57,7 +55,7 @@ abstract class AbstractRepository
     public function newQuery(): Builder
     {
         return $this->model
-        ->newQuery();
+            ->newQuery();
     }
 
     /**
@@ -70,28 +68,32 @@ abstract class AbstractRepository
 
         $count = count($query->get()) ?? 0;
 
-
         if (isset($queryOptions['category_id'])) {
             $category_id = $queryOptions['category_id'];
-            $query = $query->whereHas('categories', function($q) use ($category_id){
-                $q->where('category_id', $category_id);
-            });
+            $query = $query->whereHas(
+                'categories',
+                function ($q) use ($category_id) {
+                    $q->where('category_id', $category_id);
+                }
+            );
             $count = count($query->get());
         }
 
         if (isset($queryOptions['category_name'])) {
-            $name =  $queryOptions['category_name'];
-            $query = $query->whereHas('categories', function($q) use ($name){
-                $q->where('title', 'LIKE', "%{$name}%");
-            });
+            $name = $queryOptions['category_name'];
+            $query = $query->whereHas(
+                'categories',
+                function ($q) use ($name) {
+                    $q->where('title', 'LIKE', "%{$name}%");
+                }
+            );
             $count = count($query->get());
         }
-
 
         if (isset($queryOptions['price_from']) || isset($queryOptions['price_to'])) {
             $from = $queryOptions['price_from'] ? $queryOptions['price_from'] : 0;
             $to = $queryOptions['price_to'] ? $queryOptions['price_to'] : 9999999999999;
-            $query = $query->whereBetween('price',[$from, $to] );
+            $query = $query->whereBetween('price', [$from, $to]);
             $count = count($query->get());
         }
 
@@ -113,8 +115,8 @@ abstract class AbstractRepository
         }
 
         return [
-          'count' => $count,
-          'result' => $query->get()
+            'count' => $count,
+            'result' => $query->get()
         ];
     }
 
