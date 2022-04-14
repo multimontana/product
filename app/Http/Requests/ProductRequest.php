@@ -15,8 +15,10 @@ class ProductRequest extends FormRequest
     {
         return [
             'title' => 'string|required',
+            'details' => 'nullable|required',
             'description' => 'string|required',
-            'price' => 'nullable|numeric',
+            'price' => 'required|numeric',
+            'is_published' => 'nullable|boolean',
             'category_ids' => 'required|array|min:2|max:10'
         ];
     }

@@ -35,7 +35,6 @@ Route::prefix('category')->group(function () {
  */
 Route::prefix('/products')->group(function () {
     Route::get('/get', [ProductController::class, 'getProductsAction']);
-   //
 });
 
 Route::prefix('product')->group(function () {

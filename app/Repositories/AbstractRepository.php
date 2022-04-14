@@ -100,8 +100,9 @@ abstract class AbstractRepository
             $count = count($query->get());
         }
 
-        if (isset($queryOptions['status'])) {
-            $query = $query->where('status', $queryOptions['status']);
+        if (isset($queryOptions['is_published'])) {
+            $status = $queryOptions['is_published'] === "да" ? true : false;
+            $query = $query->where("is_published", $status);
             $count = count($query->get());
         }
 

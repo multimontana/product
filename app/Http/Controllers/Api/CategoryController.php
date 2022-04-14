@@ -31,7 +31,9 @@ class CategoryController extends Controller
     public function createAction(CategoryRequest $request): JsonResponse
     {
         try {
-            $requestData = $request->all();
+            $requestData = [
+                'title' => $request->get('title')
+            ];
 
             $data = $this->categoryService
                 ->create($requestData);
@@ -40,7 +42,7 @@ class CategoryController extends Controller
                 ->json(['data' => $data], JsonResponse::HTTP_CREATED);
         } catch (Exception $err) {
             return response()
-                ->json(['error' => $err->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+                ->json(['error' => 'Bad request'], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
 
@@ -52,7 +54,9 @@ class CategoryController extends Controller
     public function updateAction(CategoryRequest $request, int $id): JsonResponse
     {
         try {
-            $requestData = $request->all();
+            $requestData = [
+                'title' => $request->get('title'),
+            ];
 
             $data = $this->categoryService
                 ->update($requestData, $id);
@@ -61,7 +65,7 @@ class CategoryController extends Controller
                 ->json(['data' => $data], JsonResponse::HTTP_OK);
         } catch (Exception $err) {
             return response()
-                ->json(['error' => $err->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+                ->json(['error' => 'Bad request'], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
 
@@ -80,7 +84,7 @@ class CategoryController extends Controller
                 ->json(['data' => $data], JsonResponse::HTTP_OK);
         } catch (Exception $err) {
             return response()
-                ->json(['error' => $err->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+                ->json(['error' => 'Bad request'], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
 

@@ -31,7 +31,14 @@ class ProductController extends Controller
     public function createAction(ProductRequest $request): JsonResponse
     {
         try {
-            $requestData = $request->all();
+            $requestData = [
+                'title' => $request->get('title'),
+                'details' => $request->get('details', ''),
+                'description' => $request->get('description'),
+                'is_published' => $request->get('is_published', 0),
+                'price' => $request->get('price'),
+                'category_ids' => $request->get('category_ids'),
+            ];
 
             $data = $this->productService
                 ->create($requestData);
@@ -40,7 +47,7 @@ class ProductController extends Controller
                 ->json(['data' => $data], JsonResponse::HTTP_CREATED);
         } catch (Exception $err) {
             return response()
-                ->json(['error' => $err->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+                ->json(['error' => 'Bad request'], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
 
@@ -52,7 +59,14 @@ class ProductController extends Controller
     public function updateAction(ProductRequest $request, int $id): JsonResponse
     {
         try {
-            $requestData = $request->all();
+            $requestData = [
+                'title' => $request->get('title'),
+                'details' => $request->get('details', ''),
+                'description' => $request->get('description'),
+                'is_published' => $request->get('is_published', 0),
+                'price' => $request->get('price'),
+                'category_ids' => $request->get('category_ids'),
+            ];
 
             $data = $this->productService
                 ->update($requestData, $id);
@@ -61,7 +75,7 @@ class ProductController extends Controller
                 ->json(['data' => $data], JsonResponse::HTTP_OK);
         } catch (Exception $err) {
             return response()
-                ->json(['error' => $err->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+                ->json(['error' => 'Bad request'], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
 
@@ -80,7 +94,7 @@ class ProductController extends Controller
                 ->json(['data' => $data], JsonResponse::HTTP_OK);
         } catch (Exception $err) {
             return response()
-                ->json(['error' => $err->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+                ->json(['error' => 'Bad request'], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
 

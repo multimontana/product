@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('details');
             $table->text('description');
-            $table->enum('status',['да','нет'])->default('нет');
+            $table->boolean('is_published')->default(false);
             $table->integer('price');
             $table->softDeletes();
             $table->timestamps();

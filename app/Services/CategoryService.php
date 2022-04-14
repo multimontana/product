@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\CategoryRepository;
+use App\Repositories\CategoryRepository\CategoryRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class CategoryService

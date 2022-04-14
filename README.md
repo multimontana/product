@@ -1,2 +1,6 @@
-#Get product
-![img.png](img.png)
+`cp .env.example .env`
+
+`composer install`
+
+#Get products
+![img.png](public/images/img.png)

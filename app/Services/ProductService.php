@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\ProductRepository;
+use App\Repositories\ProductRepository\ProductRepository;
 
 class ProductService extends Controller
 {
