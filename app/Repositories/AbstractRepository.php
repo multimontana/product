@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Entity\CategoryPackages\Category;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as DBBuilder;
@@ -65,26 +66,42 @@ abstract class AbstractRepository
      */
     public function get(array $queryOptions): array
     {
-        $query = $this->getDb($this->getTableName())
-            ->select($queryOptions['table'] . '.*');
+        $query = $this->newQuery();
 
         $count = count($query->get()) ?? 0;
 
 
         if (isset($queryOptions['category_id'])) {
             $category_id = $queryOptions['category_id'];
-            $query = $query->whereHas('categories',function($q) use ($category_id){
+            $query = $query->whereHas('categories', function($q) use ($category_id){
                 $q->where('category_id', $category_id);
             });
             $count = count($query->get());
         }
-        if (isset($queryOptions['status'])) {
-            $query = $query->where('status', $queryOptions['status']);
+
+        if (isset($queryOptions['category_name'])) {
+            $name =  $queryOptions['category_name'];
+            $query = $query->whereHas('categories', function($q) use ($name){
+                $q->where('title', 'LIKE', "%{$name}%");
+            });
+            $count = count($query->get());
+        }
+
+
+        if (isset($queryOptions['price_from']) || isset($queryOptions['price_to'])) {
+            $from = $queryOptions['price_from'] ? $queryOptions['price_from'] : 0;
+            $to = $queryOptions['price_to'] ? $queryOptions['price_to'] : 9999999999999;
+            $query = $query->whereBetween('price',[$from, $to] );
             $count = count($query->get());
         }
 
         if (isset($queryOptions['q'])) {
-            $query = $query->where($this->getTableName() . '.name', 'iLIKE', "%{$queryOptions['q']}%");
+            $query = $query->where($this->getTableName() . '.title', 'LIKE', "%{$queryOptions['q']}%");
+            $count = count($query->get());
+        }
+
+        if (isset($queryOptions['status'])) {
+            $query = $query->where('status', $queryOptions['status']);
             $count = count($query->get());
         }
 
